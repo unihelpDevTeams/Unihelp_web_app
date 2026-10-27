@@ -155,196 +155,83 @@ const FormulaHome = ({ dark }) => {
         }
       `}
     >
-      <div className="max-w-7xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          className={`relative overflow-hidden rounded-[28px] border mb-8 ${
-            dark ? "border-zinc-800 bg-gradient-to-r from-indigo-950 via-violet-950 to-sky-950" : "border-indigo-100 bg-gradient-to-r from-indigo-50 via-violet-50 to-cyan-50"
-          }`}
-        >
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_rgba(99,102,241,0.35),transparent_32%),radial-gradient(circle_at_bottom_left,_rgba(34,211,238,0.24),transparent_36%)]" />
-          <div className="relative flex flex-col gap-6 px-6 py-8 md:flex-row md:items-center md:justify-between md:px-8">
-            <div className="max-w-xl">
-              <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-indigo-100">
-                <Sparkles className="w-3.5 h-3.5" />
-                Formula power mode
-              </div>
-              <h2 className={`text-2xl font-bold md:text-4xl ${dark ? "text-white" : "text-slate-900"}`}>
-                Turn formulas into faster recall.
-              </h2>
-              <p className={`mt-3 text-sm md:text-base ${dark ? "text-indigo-100/80" : "text-slate-600"}`}>
-                Study smarter with flashcards, quick subject filters, and a clean formula library built for revision.
-              </p>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <button
-                onClick={() => navigate("/formula-hub/flashcards")}
-                className="inline-flex items-center gap-2 rounded-2xl bg-white px-5 py-3 text-sm font-semibold text-indigo-700 shadow-lg shadow-indigo-500/20 transition hover:-translate-y-0.5"
-              >
-                <Brain className="w-4 h-4" />
-                Open flashcards
-              </button>
-              <button
-                onClick={() => navigate("/formula-hub/subjects")}
-                className={`inline-flex items-center gap-2 rounded-2xl border px-5 py-3 text-sm font-semibold transition ${
-                  dark ? "border-white/15 bg-white/5 text-white hover:bg-white/10" : "border-slate-200 bg-white/60 text-slate-700 hover:bg-white"
-                }`}
-              >
-                Browse subjects
-                <ChevronRight className="w-4 h-4" />
-              </button>
-            </div>
-          </div>
-        </motion.div>
-
+      <div className="max-w-5xl mx-auto">
         {/* =========================
-            TOP NAVIGATION
+            COMPACT TOP NAVIGATION
         ========================= */}
-
         <motion.div
-          initial={{
-            opacity: 0,
-            y: -10,
-          }}
-          animate={{
-            opacity: 1,
-            y: 0,
-          }}
-          className="flex flex-wrap items-center justify-between gap-4 mb-8"
+          initial={{ opacity: 0, y: -8 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="flex flex-wrap items-center justify-between gap-2.5 mb-5"
         >
-          {/* LEFT */}
-
-          <div className="flex items-center gap-3">
-            {/* BACK BUTTON */}
-
+          {/* Back & Home buttons */}
+          <div className="flex items-center gap-2">
             <button
               onClick={() => navigate(-1)}
-              className={`
-                h-14 px-5 rounded-2xl
-                flex items-center gap-3
-                font-semibold transition-all duration-300
-                hover:scale-[1.03]
-                ${
-                  dark
-                    ? "bg-zinc-900 border border-zinc-800 text-white hover:bg-zinc-800"
-                    : "bg-white border border-zinc-200 text-black hover:bg-zinc-100"
-                }
-              `}
+              className={`h-9 px-3 rounded-xl flex items-center gap-1.5 text-xs sm:text-sm font-semibold transition border ${
+                dark
+                  ? "bg-zinc-900 border-zinc-800 text-white hover:bg-zinc-800"
+                  : "bg-white border-zinc-200 text-zinc-800 hover:bg-zinc-100"
+              }`}
             >
-              <ArrowLeft className="w-5 h-5" />
-              Back
+              <ArrowLeft className="w-4 h-4" />
+              <span>Back</span>
             </button>
-
-            {/* HOME BUTTON */}
-
             <button
               onClick={() => navigate("/")}
-              className={`
-                h-14 px-5 rounded-2xl
-                flex items-center gap-3
-                font-semibold transition-all duration-300
-                hover:scale-[1.03]
-                ${
-                  dark
-                    ? "bg-zinc-900 border border-zinc-800 text-white hover:bg-zinc-800"
-                    : "bg-white border border-zinc-200 text-black hover:bg-zinc-100"
-                }
-              `}>
-              <Home className="w-5 h-5" />
-              Home
-            </button>
-
-            {/* FLASHCARDS BUTTON */}
-            <button
-              onClick={() => navigate("/formula-hub/flashcards")}
-              className={`
-                h-14 px-5 rounded-2xl
-                flex items-center gap-3
-                font-semibold transition-all duration-300
-                hover:scale-[1.03]
-                ${
-                  dark
-                    ? "bg-zinc-900 border border-zinc-800 text-white hover:bg-zinc-800"
-                    : "bg-white border border-zinc-200 text-black hover:bg-zinc-100"
-                }
-              `}>
-              <Brain className="w-5 h-5" />
-              Flash Cards
+              className={`h-9 px-3 rounded-xl flex items-center gap-1.5 text-xs sm:text-sm font-semibold transition border ${
+                dark
+                  ? "bg-zinc-900 border-zinc-800 text-white hover:bg-zinc-800"
+                  : "bg-white border-zinc-200 text-zinc-800 hover:bg-zinc-100"
+              }`}
+            >
+              <Home className="w-4 h-4" />
+              <span>Home</span>
             </button>
           </div>
 
-          {/* RIGHT */}
-
-          <div
-            className={`
-              px-5 py-3 rounded-2xl
-              flex items-center gap-3
-              ${
+          {/* Quick Action Navigation Pills */}
+          <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-1">
+            <button
+              onClick={() => navigate("/formula-hub/flashcards")}
+              className="h-9 px-3 rounded-xl inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold bg-indigo-600 text-white hover:bg-indigo-700 shadow-sm transition"
+            >
+              <Brain className="w-4 h-4" />
+              <span>Flashcards</span>
+            </button>
+            <button
+              onClick={() => navigate("/formula-hub/subjects")}
+              className={`h-9 px-3 rounded-xl inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold transition border ${
                 dark
-                  ? "bg-zinc-900 border border-zinc-800"
-                  : "bg-white border border-zinc-200"
-              }
-            `}
-          >
-            <Sparkles className="w-5 h-5 text-yellow-500" />
-
-            <div>
-              <p
-                className={`
-                  text-xs
-                  ${
-                    dark
-                      ? "text-zinc-400"
-                      : "text-zinc-500"
-                  }
-                `}
-              >
-                Formula Hub
-              </p>
-
-              <h3
-                className={`
-                  text-sm font-bold
-                  ${
-                    dark
-                      ? "text-white"
-                      : "text-black"
-                  }
-                `}
-              >
-                Smart Learning System
-              </h3>
-            </div>
+                  ? "bg-zinc-900 border-zinc-800 text-white hover:bg-zinc-800"
+                  : "bg-white border-zinc-200 text-zinc-700 hover:bg-zinc-100"
+              }`}
+            >
+              <span>Subjects</span>
+              <ChevronRight className="w-3.5 h-3.5" />
+            </button>
+            <button
+              onClick={() => navigate("/formula-hub/bookmarks")}
+              className={`h-9 px-3 rounded-xl inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold transition border ${
+                dark
+                  ? "bg-zinc-900 border-zinc-800 text-white hover:bg-zinc-800"
+                  : "bg-white border-zinc-200 text-zinc-700 hover:bg-zinc-100"
+              }`}
+            >
+              <Bookmark className="w-4 h-4 text-emerald-500" />
+              <span className="hidden sm:inline">Bookmarks</span>
+            </button>
           </div>
         </motion.div>
 
         {/* HERO */}
-
         <motion.div
-          initial={{
-            opacity: 0,
-            y: 20,
-          }}
-          animate={{
-            opacity: 1,
-            y: 0,
-          }}
-          transition={{
-            duration: 0.4,
-          }}
-          className={`
-            relative overflow-hidden
-            rounded-[35px]
-            border
-            p-6 sm:p-8
-            ${
-              dark
-                ? "bg-zinc-900 border-zinc-800"
-                : "bg-white border-zinc-200"
-            }
-          `}
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3 }}
+          className={`relative overflow-hidden rounded-2xl sm:rounded-3xl border p-5 sm:p-6 mb-6 ${
+            dark ? "bg-zinc-900 border-zinc-800" : "bg-white border-zinc-200 shadow-sm"
+          }`}
         >
           {/* BG EFFECT */}
 
@@ -357,11 +244,11 @@ const FormulaHome = ({ dark }) => {
               {/* LEFT */}
 
               <div className="flex-1">
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-3.5">
                   <div
                     className={`
-                      w-16 h-16 rounded-3xl
-                      flex items-center justify-center
+                      w-12 h-12 sm:w-14 sm:h-14 rounded-2xl
+                      flex items-center justify-center shrink-0
                       ${
                         dark
                           ? "bg-black"
@@ -371,11 +258,11 @@ const FormulaHome = ({ dark }) => {
                   >
                     <TrendingUp
                       className={`
-                        w-8 h-8
+                        w-6 h-6 sm:w-7 sm:h-7
                         ${
                           dark
-                            ? "text-white"
-                            : "text-black"
+                            ? "text-indigo-400"
+                            : "text-indigo-600"
                         }
                       `}
                     />
@@ -384,8 +271,8 @@ const FormulaHome = ({ dark }) => {
                   <div>
                     <h1
                       className={`
-                        text-3xl sm:text-4xl lg:text-5xl
-                        font-black tracking-tight
+                        text-2xl sm:text-3xl md:text-4xl
+                        font-extrabold tracking-tight
                         ${
                           dark
                             ? "text-white"
@@ -398,7 +285,7 @@ const FormulaHome = ({ dark }) => {
 
                     <p
                       className={`
-                        mt-2 text-sm sm:text-base
+                        mt-1 text-xs sm:text-sm
                         ${
                           dark
                             ? "text-zinc-400"
@@ -406,38 +293,35 @@ const FormulaHome = ({ dark }) => {
                         }
                       `}
                     >
-                      Master formulas for
-                      university
-                      courses with AI-powered
-                      explanations.
+                      Master course formulas for university exams with AI explanations.
                     </p>
                   </div>
                 </div>
 
                 {/* STATS */}
 
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-8">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-6">
                   {/* CARD */}
 
                   <div
                     className={`
-                      p-4 rounded-3xl
-                      flex items-center gap-4
+                      p-3.5 rounded-2xl
+                      flex items-center gap-3
                       ${
                         dark
-                          ? "bg-black"
-                          : "bg-zinc-100"
+                          ? "bg-black/60 border border-zinc-800/80"
+                          : "bg-zinc-50 border border-zinc-200/80"
                       }
                     `}
                   >
-                    <div className="w-12 h-12 rounded-2xl bg-orange-500/10 flex items-center justify-center">
-                      <Flame className="w-6 h-6 text-orange-500" />
+                    <div className="w-10 h-10 rounded-xl bg-orange-500/10 flex items-center justify-center shrink-0">
+                      <Flame className="w-5 h-5 text-orange-500" />
                     </div>
 
                     <div>
                       <h3
                         className={`
-                          text-lg font-bold
+                          text-base font-bold
                           ${
                             dark
                               ? "text-white"
@@ -458,7 +342,7 @@ const FormulaHome = ({ dark }) => {
                           }
                         `}
                       >
-                        Trending Formulas
+                        Formulas
                       </p>
                     </div>
                   </div>
@@ -467,23 +351,23 @@ const FormulaHome = ({ dark }) => {
 
                   <div
                     className={`
-                      p-4 rounded-3xl
-                      flex items-center gap-4
+                      p-3.5 rounded-2xl
+                      flex items-center gap-3
                       ${
                         dark
-                          ? "bg-black"
-                          : "bg-zinc-100"
+                          ? "bg-black/60 border border-zinc-800/80"
+                          : "bg-zinc-50 border border-zinc-200/80"
                       }
                     `}
                   >
-                    <div className="w-12 h-12 rounded-2xl bg-green-500/10 flex items-center justify-center">
-                      <Bookmark className="w-6 h-6 text-green-500" />
+                    <div className="w-10 h-10 rounded-xl bg-green-500/10 flex items-center justify-center shrink-0">
+                      <Bookmark className="w-5 h-5 text-green-500" />
                     </div>
 
                     <div>
                       <h3
                         className={`
-                          text-lg font-bold
+                          text-base font-bold
                           ${
                             dark
                               ? "text-white"
@@ -491,7 +375,7 @@ const FormulaHome = ({ dark }) => {
                           }
                         `}
                       >
-                        Save
+                        Quick Recall
                       </h3>
 
                       <p
@@ -504,7 +388,7 @@ const FormulaHome = ({ dark }) => {
                           }
                         `}
                       >
-                        Bookmark formulas
+                        Saved & Review
                       </p>
                     </div>
                   </div>
@@ -513,23 +397,23 @@ const FormulaHome = ({ dark }) => {
 
                   <div
                     className={`
-                      p-4 rounded-3xl
-                      flex items-center gap-4
+                      p-3.5 rounded-2xl
+                      flex items-center gap-3
                       ${
                         dark
-                          ? "bg-black"
-                          : "bg-zinc-100"
+                          ? "bg-black/60 border border-zinc-800/80"
+                          : "bg-zinc-50 border border-zinc-200/80"
                       }
                     `}
                   >
-                    <div className="w-12 h-12 rounded-2xl bg-purple-500/10 flex items-center justify-center">
-                      <Brain className="w-6 h-6 text-purple-500" />
+                    <div className="w-10 h-10 rounded-xl bg-purple-500/10 flex items-center justify-center shrink-0">
+                      <Brain className="w-5 h-5 text-purple-500" />
                     </div>
 
                     <div>
                       <h3
                         className={`
-                          text-lg font-bold
+                          text-base font-bold
                           ${
                             dark
                               ? "text-white"
@@ -550,7 +434,7 @@ const FormulaHome = ({ dark }) => {
                           }
                         `}
                       >
-                        Smart explanations
+                        Smart breakdown
                       </p>
                     </div>
                   </div>

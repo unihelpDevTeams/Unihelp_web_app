@@ -530,13 +530,15 @@ export const startConversation = async (currentUser, otherUser, profile) => {
   if (currentBlock.exists() || otherBlock.exists()) {
     throw new Error("You cannot message this student while either of you has blocked the other.");
   }
-  if (!friendshipSnap.exists()) throw new Error("Become friends before chatting freely.");
+
+  const areFriends = friendshipSnap.exists();
 
   await setDoc(doc(db, "conversations", conversationId), {
     memberIds: members,
     participants: members,
     type: "direct",
-    access: "friends",
+    access: areFriends ? "friends" : "intro",
+    areFriends,
     memberInfo: {
       [currentUser.uid]: currentSummary,
       [otherUser.id]: otherSummary,
@@ -594,7 +596,12 @@ export const canSendDirectMessage = async (conversation, uid) => {
     getDoc(doc(db, "blockedUsers", `${uid}_${otherUid}`)),
     getDoc(doc(db, "blockedUsers", `${otherUid}_${uid}`)),
   ]);
-  return friendshipSnap.exists() && !currentBlock.exists() && !otherBlock.exists();
+  if (currentBlock.exists() || otherBlock.exists()) return false;
+  if (friendshipSnap.exists()) return true;
+
+  // Non-friends: 1 intro message is allowed
+  const count = Number(conversation?.messageCount || 0);
+  return count < 1;
 };
 
 export const sendDirectMessage = async (conversation, user, profile, payload) => {
@@ -610,7 +617,7 @@ export const sendDirectMessage = async (conversation, user, profile, payload) =>
         throw new Error("You cannot message this student while either of you has blocked the other.");
       }
     }
-    throw new Error("You can only send messages after becoming friends.");
+    throw new Error("You've used your 1 intro message. Add them as a friend to continue chatting.");
   }
 
   const summary = userSummary(user, profile);

@@ -21,7 +21,13 @@ const CommunityHub = ({ dark = false }) => {
             <div className="flex items-center gap-3">
               <button
                 type="button"
-                onClick={() => navigate(window.history.state?.idx > 0 ? -1 : "/", { replace: window.history.state?.idx <= 0 })}
+                onClick={() => {
+                  if (window.history.state?.idx > 0) {
+                    navigate(-1);
+                  } else {
+                    navigate("/", { replace: true });
+                  }
+                }}
                 className={`inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 ${
                   dark
                     ? "border-slate-700 text-slate-300 hover:bg-slate-800 hover:text-white"

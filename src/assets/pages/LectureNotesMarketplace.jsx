@@ -166,8 +166,8 @@ const PDFThumbnail = ({ note, dark }) => {
 
   return (
     <div
-      className="relative w-full overflow-hidden rounded-2xl mb-4"
-      style={{ height: 180, background: dark ? "#0f172a" : "#eef2ff" }}
+      className="relative w-full overflow-hidden rounded-xl mb-3 h-28 sm:h-40"
+      style={{ background: dark ? "#0f172a" : "#eef2ff" }}
     >
       {previewUrl && !failed ? (
         useFramePreview ? (
@@ -187,15 +187,15 @@ const PDFThumbnail = ({ note, dark }) => {
           />
         )
       ) : (
-        <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 opacity-30">
-          <FileText size={44} />
-          <span className="text-xs font-semibold tracking-[0.3em] uppercase">
+        <div className="absolute inset-0 flex flex-col items-center justify-center gap-1.5 opacity-30">
+          <FileText size={28} />
+          <span className="text-[10px] font-semibold tracking-[0.25em] uppercase">
             PDF
           </span>
         </div>
       )}
 
-      <span className="absolute top-3 right-3 rounded-full bg-indigo-600/90 px-2 py-1 text-[10px] font-bold tracking-[0.2em] text-white">
+      <span className="absolute top-2 right-2 rounded-md bg-indigo-600/90 px-1.5 py-0.5 text-[9px] font-bold tracking-[0.15em] text-white">
         PDF
       </span>
     </div>
@@ -595,14 +595,8 @@ export default function LectureNotesMarketplace({ dark }) {
   };
 
   return (
-    <div className={`min-h-screen  w-full overflow-hidden rounded-[32px] ${bg}`}>
-      <div className="fixed inset-0 -z-10 pointer-events-none overflow-hidden">
-        <div className="absolute left-1/2 top-0 h-[700px] w-[700px] -translate-x-1/2 rounded-full bg-indigo-600/20 blur-[140px]" />
-        <div className="absolute bottom-0 right-0 h-[420px] w-[420px] rounded-full bg-violet-600/10 blur-[120px]" />
-      </div>
-
-      <div className="mx-auto max-w-7xl px-3 sm:px-6 py-2 sm:py-6">
-        <div className="flex flex-col gap-2.5 sm:gap-3">
+    <div className="w-full">
+      <div className="flex flex-col gap-2 sm:gap-2.5">
           {/* Top Row: Search + Upload Note + Bell */}
           <div className="flex items-center gap-2">
             <div className={`flex flex-1 items-center gap-2.5 rounded-xl sm:rounded-2xl px-3 py-2 sm:py-3 ${card}`}>
@@ -794,71 +788,77 @@ export default function LectureNotesMarketplace({ dark }) {
             </button>
           </div>
         ) : tab === "notes" ? (
-          <div className="mt-6 w-full grid gap-6 grid-cols-1 xl:grid-cols-2">
+          <div className="mt-4 sm:mt-6 w-full grid gap-3 sm:gap-5 grid-cols-1 xl:grid-cols-2">
             {filteredNotes.length === 0 ? (
-              <div className={`${card} rounded-[32px] p-12 text-center xl:col-span-2`}>
-                <FileText size={44} className="mx-auto mb-4 opacity-40" />
-                <h2 className="text-2xl font-bold">No notes found</h2>
-                <p className="mt-2 opacity-60">Try a different search or upload a new PDF.</p>
+              <div className={`${card} rounded-2xl p-6 sm:p-10 text-center xl:col-span-2`}>
+                <FileText size={32} className="mx-auto mb-3 opacity-40" />
+                <h2 className="text-lg sm:text-xl font-bold">No notes found</h2>
+                <p className="mt-1 text-xs sm:text-sm opacity-60">Try a different search or upload a new PDF.</p>
               </div>
             ) : (
               filteredNotes.map((note) => (
-                <article key={note.id} className={`rounded-[32px] p-5 transition-transform hover:-translate-y-1 ${card}`}>
+                <article key={note.id} className={`rounded-2xl p-3 sm:p-4 transition-transform hover:-translate-y-0.5 ${card}`}>
                   <PDFThumbnail note={note} dark={dark} />
 
-                  <div className="flex items-start justify-between gap-4">
+                  <div className="flex items-start justify-between gap-3">
                     <div className="min-w-0 flex-1">
-                      <h2 className="truncate text-xl font-black">{note.title}</h2>
-                      <p className="mt-1 text-sm opacity-70">
+                      <h2 className="truncate text-sm sm:text-base font-bold">{note.title}</h2>
+                      <p className="mt-0.5 text-xs opacity-70 truncate">
                         {note.course} · {note.dept}
                       </p>
-                      <p className="mt-1 text-xs opacity-50">
+                      <p className="mt-0.5 text-[11px] opacity-50 truncate">
                         {note.lecturer} · {note.school}
                       </p>
                     </div>
 
-                    <div className="rounded-2xl flex gap-1.5 justify-center items-center bg-indigo-500/10 px-3 py-2 text-right">
-                      <DownloadIcon size={22}/>
-                      <p className="mt-1 text-lg font-black">{note.downloads || 0}</p>
+                    <div className="rounded-xl flex gap-1 justify-center items-center bg-indigo-500/10 px-2 py-1 text-right shrink-0">
+                      <DownloadIcon size={16}/>
+                      <p className="text-xs sm:text-sm font-bold">{note.downloads || 0}</p>
                     </div>
                   </div>
 
-                  <div className="mt-2">
-                    <div className="flex items-center gap-1 text-yellow-400">
-                      {[1, 2, 3, 4, 5].map((star) => (
-                        <button
-                          key={star}
-                          onClick={() => rateNote(note.id, star)}
-                          className="transition-transform hover:scale-110"
-                        >
-                          <Star
-                            size={12}
-                            className={note.rating >= star ? "fill-yellow-400" : ""}
-                          />
-                        </button>
-                      ))}
-                    </div>
+                  <div className="mt-2.5 pt-2 border-t border-slate-100 dark:border-white/5">
+                    <div className="flex items-center justify-between gap-2 flex-wrap sm:flex-nowrap">
+                      <div className="flex items-center gap-0.5 text-yellow-400">
+                        {[1, 2, 3, 4, 5].map((star) => (
+                          <button
+                            key={star}
+                            onClick={() => rateNote(note.id, star)}
+                            aria-label={`Rate ${star} stars`}
+                            className="transition-transform hover:scale-110 p-0.5"
+                          >
+                            <Star
+                              size={12}
+                              className={note.rating >= star ? "fill-yellow-400" : ""}
+                            />
+                          </button>
+                        ))}
+                      </div>
 
-                    <div className="flex w-full justify-around gap-1 mt-2.5">
-                      <button onClick={() => handleShare(note)}
-                        className={`flex h-11 items-center gap-2 rounded-2xl px-4 font-semibold ${ dark ? "bg-white/5" : "bg-slate-100"}`}>
-                        <Share2 size={16} />
-                        Share
-                      </button>
-                      <button onClick={() => openViewer(note)}
-                        className={`flex h-11 items-center gap-2 rounded-2xl px-4 font-semibold ${
-                          dark ? "bg-white/5" : "bg-slate-100"
-                        }`}
-                      >
-                        <Eye size={16} />
-                        Preview
-                      </button>
-                      <button
-                        onClick={() => handleDownload(note)}
-                        className="flex h-11 items-center gap-2 text-[12px] rounded-2xl bg-indigo-600 px-3 font-semibold text-white hover:bg-indigo-700">
-                        <Download size={16} />
-                        Download
-                      </button>
+                      <div className="flex items-center gap-1.5 ml-auto">
+                        <button onClick={() => handleShare(note)}
+                          aria-label="Share note"
+                          className={`flex h-8 items-center gap-1 rounded-xl px-2.5 text-xs font-semibold ${ dark ? "bg-white/5 hover:bg-white/10" : "bg-slate-100 hover:bg-slate-200"}`}>
+                          <Share2 size={13} />
+                          <span className="hidden sm:inline">Share</span>
+                        </button>
+                        <button onClick={() => openViewer(note)}
+                          aria-label="Preview note"
+                          className={`flex h-8 items-center gap-1 rounded-xl px-2.5 text-xs font-semibold ${
+                            dark ? "bg-white/5 hover:bg-white/10" : "bg-slate-100 hover:bg-slate-200"
+                          }`}
+                        >
+                          <Eye size={13} />
+                          <span>Preview</span>
+                        </button>
+                        <button
+                          onClick={() => handleDownload(note)}
+                          aria-label="Download note"
+                          className="flex h-8 items-center gap-1 text-xs rounded-xl bg-indigo-600 px-3 font-semibold text-white hover:bg-indigo-700 shadow-sm shadow-indigo-600/20">
+                          <Download size={13} />
+                          <span>Download</span>
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </article>

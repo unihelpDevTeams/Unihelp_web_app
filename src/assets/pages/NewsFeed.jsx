@@ -1355,42 +1355,42 @@ export default function NewsFeed({ dark = false }) {
   const showEmpty = !loading && !feedError && filteredItems.length === 0;
 
   return (
-    <main className={`mx-auto w-full max-w-5xl px-4 py-6 sm:px-6 sm:py-8 ${t.page}`}>
-      <header className="mb-5 flex items-end justify-between gap-4">
+    <main className={`mx-auto w-full max-w-5xl px-3 py-3 sm:px-6 sm:py-8 ${t.page}`}>
+      <header className="mb-3 sm:mb-5 flex items-end justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">Campus feed</h1>
-          <p className={`mt-1 text-sm ${t.muted}`}>See what students around you are sharing.</p>
+          <h1 className="text-xl font-bold tracking-tight sm:text-3xl">Campus feed</h1>
+          <p className={`mt-0.5 text-xs sm:text-sm ${t.muted}`}>See what students around you are sharing.</p>
         </div>
         <button
           type="button"
           onClick={refresh}
           disabled={loading}
-          className={`inline-flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-semibold disabled:opacity-60 ${t.ghost} ${t.focus}`}
+          className={`inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 sm:px-3 sm:py-2 text-xs sm:text-sm font-semibold disabled:opacity-60 ${t.ghost} ${t.focus}`}
         >
-          <RefreshCw size={15} className={loading ? "motion-safe:animate-spin" : ""} />
+          <RefreshCw size={14} className={loading ? "motion-safe:animate-spin" : ""} />
           <span className="hidden sm:inline">{loading ? "Updating…" : "Refresh"}</span>
         </button>
       </header>
 
-      <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_280px]">
+      <div className="grid items-start gap-4 sm:gap-6 lg:grid-cols-[minmax(0,1fr)_280px]">
         <section className="min-w-0">
           <Composer ref={composerRef} user={currentUser} t={t} onSubmit={submitPost} />
 
           {/* ---------- search + filters ---------- */}
-          <div className={`sticky top-2 z-20 mb-4 p-2.5 shadow-sm ${t.card}`}>
-            <div className="flex items-center gap-2">
-              <label className={`flex min-w-0 flex-1 items-center gap-2 rounded-xl px-3 focus-within:border-indigo-500 focus-within:ring-2 focus-within:ring-indigo-500/25 ${t.field}`}>
-                <Search size={17} className={`flex-none ${t.faint}`} />
+          <div className={`sticky top-2 z-20 mb-3 sm:mb-4 p-2 sm:p-2.5 shadow-sm ${t.card}`}>
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              <label className={`flex min-w-0 flex-1 items-center gap-2 rounded-xl px-2.5 sm:px-3 focus-within:border-indigo-500 focus-within:ring-2 focus-within:ring-indigo-500/25 ${t.field}`}>
+                <Search size={16} className={`flex-none ${t.faint}`} />
                 <input
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                   aria-label="Search posts"
                   placeholder="Search posts, people or #tags"
-                  className="h-10 min-w-0 flex-1 bg-transparent text-sm outline-none"
+                  className="h-9 sm:h-10 min-w-0 flex-1 bg-transparent text-xs sm:text-sm outline-none"
                 />
                 {query && (
-                  <button type="button" onClick={() => setQuery("")} aria-label="Clear search" className={`rounded-full p-1 ${t.faint} ${t.focus}`}>
-                    <X size={15} />
+                  <button type="button" onClick={() => setQuery("")} aria-label="Clear search" className={`rounded-full p-0.5 ${t.faint} ${t.focus}`}>
+                    <X size={14} />
                   </button>
                 )}
               </label>
@@ -1398,14 +1398,14 @@ export default function NewsFeed({ dark = false }) {
                 type="button"
                 onClick={() => setFiltersOpen((v) => !v)}
                 aria-expanded={filtersOpen}
-                className={`relative inline-flex h-10 items-center gap-2 rounded-xl px-3 text-sm font-semibold ${t.focus} ${
+                className={`relative inline-flex h-9 sm:h-10 items-center gap-1.5 rounded-xl px-2.5 sm:px-3 text-xs sm:text-sm font-semibold ${t.focus} ${
                   filtersOpen || hiddenFilterCount ? t.accentSoft : t.chip
                 }`}
               >
-                <SlidersHorizontal size={16} />
+                <SlidersHorizontal size={15} />
                 <span className="hidden sm:inline">Filters</span>
                 {hiddenFilterCount > 0 && (
-                  <span className="flex h-5 min-w-[1.25rem] items-center justify-center rounded-full bg-indigo-600 px-1 text-[11px] font-bold text-white">
+                  <span className="flex h-4 min-w-[1rem] items-center justify-center rounded-full bg-indigo-600 px-1 text-[10px] font-bold text-white">
                     {hiddenFilterCount}
                   </span>
                 )}

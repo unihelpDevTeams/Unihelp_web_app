@@ -57,62 +57,75 @@ export default function Resources({ dark }) {
   };
 
   return (
-    <div className="w-full md:mt-20 min-h-screen relative">
-      <div className="mx-auto max-w-7xl px-3 py-3 sm:px-6 sm:py-6">
+    <div className="w-full md:mt-16 min-h-screen relative">
+      <div className="mx-auto max-w-7xl px-3 py-2 sm:px-6 sm:py-5">
         {/* Header */}
-        <div className="mb-3 sm:mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+        <div className="mb-2.5 sm:mb-5 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <p className={`mb-0.5 text-[10px] sm:text-xs font-semibold uppercase tracking-[0.25em] ${dark ? "text-indigo-400" : "text-indigo-600"}`}>
+            <p className={`mb-0.5 text-[9px] sm:text-xs font-semibold uppercase tracking-[0.2em] ${dark ? "text-indigo-400" : "text-indigo-600"}`}>
               Resource center
             </p>
-            <h1 className={`text-xl sm:text-3xl font-bold ${dark ? "text-white" : "text-slate-900"}`}>
+            <h1 className={`text-lg sm:text-2xl font-bold tracking-tight ${dark ? "text-white" : "text-slate-900"}`}>
               {active.label}
             </h1>
-            <p className={`mt-0.5 text-xs sm:text-sm hidden sm:block ${dark ? "text-slate-400" : "text-slate-500"}`}>{active.blurb}</p>
+            <p className={`mt-0.5 text-xs hidden sm:block ${dark ? "text-slate-400" : "text-slate-500"}`}>{active.blurb}</p>
           </div>
 
-          {/* Segmented toggle */}
+          {/* Segmented toggle with compact labels on mobile to prevent truncation */}
           <div
             role="tablist"
             aria-label="Resource type"
-            className={`grid grid-cols-3 gap-1 rounded-xl p-1 w-full sm:w-auto ${
+            className={`grid grid-cols-3 gap-0.5 sm:gap-1 rounded-xl p-0.5 sm:p-1 w-full sm:w-auto ${
               dark ? "bg-white/5 ring-1 ring-white/10" : "bg-slate-100 ring-1 ring-slate-200"
             }`}
           >
-            {TABS.map((t) => {
-              const Icon = t.icon;
-              const isActive = tab === t.key;
-              return (
-                <button
-                  key={t.key}
-                  role="tab"
-                  aria-selected={isActive}
-                  onClick={() => setTab(t.key)}
-                  className={`inline-flex h-9 sm:h-10 items-center justify-center gap-1 sm:gap-2 rounded-lg px-1 sm:px-4 text-[11px] sm:text-sm font-semibold transition-all duration-200 ${
-                    isActive
-                      ? "bg-indigo-600 text-white shadow-sm shadow-indigo-600/30"
-                      : dark
-                      ? "text-slate-300 hover:bg-white/5 hover:text-white"
-                      : "text-slate-500 hover:bg-white hover:text-slate-900"
-                  }`}
-                >
-                  <Icon size={14} className={`shrink-0 ${isActive ? "opacity-100" : "opacity-60"}`} />
-                  <span className="truncate">{t.label}</span>
-                </button>
-              );
-            })}
+            <button
+              role="tab"
+              aria-selected={tab === "notes"}
+              onClick={() => setTab("notes")}
+              className={`inline-flex h-8 sm:h-9 items-center justify-center gap-1 sm:gap-1.5 rounded-lg px-2 sm:px-3 text-xs sm:text-sm font-semibold transition-all duration-200 ${
+                tab === "notes"
+                  ? "bg-indigo-600 text-white shadow-sm shadow-indigo-600/30"
+                  : dark
+                  ? "text-slate-300 hover:bg-white/5 hover:text-white"
+                  : "text-slate-500 hover:bg-white hover:text-slate-900"
+              }`}
+            >
+              <BookOpen size={13} className={`shrink-0 ${tab === "notes" ? "opacity-100" : "opacity-60"}`} />
+              <span className="sm:hidden">Notes</span>
+              <span className="hidden sm:inline">Lecture notes</span>
+            </button>
+
+            <button
+              role="tab"
+              aria-selected={tab === "questions"}
+              onClick={() => setTab("questions")}
+              className={`inline-flex h-8 sm:h-9 items-center justify-center gap-1 sm:gap-1.5 rounded-lg px-2 sm:px-3 text-xs sm:text-sm font-semibold transition-all duration-200 ${
+                tab === "questions"
+                  ? "bg-indigo-600 text-white shadow-sm shadow-indigo-600/30"
+                  : dark
+                  ? "text-slate-300 hover:bg-white/5 hover:text-white"
+                  : "text-slate-500 hover:bg-white hover:text-slate-900"
+              }`}
+            >
+              <ClipboardList size={13} className={`shrink-0 ${tab === "questions" ? "opacity-100" : "opacity-60"}`} />
+              <span className="sm:hidden">Past Qs</span>
+              <span className="hidden sm:inline">Past questions</span>
+            </button>
+
             <button
               type="button"
               role="tab"
               onClick={() => navigate("/cbt-practice")}
-              className={`inline-flex h-9 sm:h-10 items-center justify-center gap-1 sm:gap-2 rounded-lg px-1 sm:px-4 text-[11px] sm:text-sm font-semibold transition-all duration-200 ${
+              className={`inline-flex h-8 sm:h-9 items-center justify-center gap-1 sm:gap-1.5 rounded-lg px-2 sm:px-3 text-xs sm:text-sm font-semibold transition-all duration-200 ${
                 dark
                   ? "text-slate-300 hover:bg-white/5 hover:text-white"
                   : "text-slate-500 hover:bg-white hover:text-slate-900"
               }`}
             >
-              <Computer size={14} className="shrink-0 opacity-60" />
-              <span className="truncate">CBT practice</span>
+              <Computer size={13} className="shrink-0 opacity-60" />
+              <span className="sm:hidden">CBT</span>
+              <span className="hidden sm:inline">CBT practice</span>
             </button>
           </div>
         </div>
@@ -128,11 +141,12 @@ export default function Resources({ dark }) {
       </div>
 
       {/* Floating Action Buttons */}
-      <div className="fixed right-4 bottom-20 md:bottom-10 z-50 flex flex-col gap-3">
+      <div className="fixed right-3 bottom-20 md:bottom-8 z-40 flex flex-col gap-2">
         <button 
           onClick={() => navigate('/uploadquestion')}
-          className='flex items-center gap-2 p-3 px-5 bg-purple-600 shadow-lg shadow-purple-500/30 rounded-full text-white hover:bg-purple-700 transition font-bold'>
-          <PlusCircleIcon size={24}/>
+          aria-label="Upload PDF"
+          className='flex items-center gap-1.5 p-2.5 sm:px-4 bg-purple-600 shadow-md shadow-purple-500/30 rounded-full text-white hover:bg-purple-700 transition text-xs sm:text-sm font-bold'>
+          <PlusCircleIcon size={18}/>
           <span className="hidden sm:inline">Upload PDF</span>
         </button>
         <button 
@@ -140,9 +154,10 @@ export default function Resources({ dark }) {
             setRequestData((current) => ({ ...current, type: tab === "notes" ? "note" : "question" }));
             setShowModal(true);
           }}
-          className='flex items-center gap-2 p-3 px-5 bg-indigo-600 shadow-lg shadow-indigo-500/30 rounded-full text-white hover:bg-indigo-700 transition font-bold'
+          aria-label="Request Material"
+          className='flex items-center gap-1.5 p-2.5 sm:px-4 bg-indigo-600 shadow-md shadow-indigo-500/30 rounded-full text-white hover:bg-indigo-700 transition text-xs sm:text-sm font-bold'
         >
-          <MessageSquarePlus size={24}/>
+          <MessageSquarePlus size={18}/>
           <span className="hidden sm:inline">Request Material</span>
         </button>
       </div>

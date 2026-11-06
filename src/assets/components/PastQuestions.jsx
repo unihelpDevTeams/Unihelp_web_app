@@ -41,7 +41,7 @@ const PDFThumbnail = ({ url, dark, year }) => {
 
   return (
     <div
-      className={`relative h-44 w-full overflow-hidden rounded-2xl ${
+      className={`relative h-28 sm:h-40 w-full overflow-hidden rounded-xl ${
         dark ? "bg-slate-950" : "bg-indigo-50"
       }`}
     >
@@ -350,64 +350,63 @@ const Questions = ({ dark }) => {
   const ghost = dark
     ? "bg-white/5 text-slate-200 hover:bg-white/10"
     : "bg-slate-100 text-slate-700 hover:bg-slate-200";
-  const selectCls = `w-full cursor-pointer rounded-xl border px-3 py-2.5 text-sm font-medium transition-colors focus:border-indigo-500 ${field} ${focusRing}`;
+  const selectCls = `w-full cursor-pointer rounded-xl border px-2.5 py-1.5 sm:py-2 text-xs sm:text-sm font-medium transition-colors focus:border-indigo-500 ${field} ${focusRing}`;
   const colorScheme = { colorScheme: dark ? "dark" : "light" };
 
   // ─────────────────────────────────────────────────────────
   return (
-    <div className={`min-h-screen px-4 py-6 sm:py-8 ${pageBg}`}>
-      <div className="mx-auto max-w-6xl space-y-5">
+    <div className="w-full">
+      <div className="mx-auto max-w-6xl space-y-3 sm:space-y-4">
 
         {/* ── HEADER ── */}
-        <header className="flex flex-wrap items-end justify-between gap-3">
+        <header className="flex items-center justify-between gap-2">
           <div>
-            <h1 className="text-2xl font-black tracking-tight sm:text-3xl">Past questions</h1>
-            <p className={`mt-1 text-sm ${muted}`}>
+            <p className={`text-xs ${muted}`}>
               {loading
                 ? "Loading past questions…"
-                : `${questions.length} paper${questions.length === 1 ? "" : "s"} from ${schools.length || "your"} school${schools.length === 1 ? "" : "s"}. View any paper in the app.`}
+                : `${questions.length} paper${questions.length === 1 ? "" : "s"} available`}
             </p>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5">
             <span
-              className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-bold ${
+              className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[11px] font-bold ${
                 isPremium ? "bg-amber-500 text-black" : ghost
               }`}
             >
-              <Crown size={14} /> {isPremium ? "Premium" : "Free plan"}
+              <Crown size={12} /> {isPremium ? "Premium" : "Free"}
             </span>
             <button
               type="button"
               onClick={fetchQuestions}
               disabled={loading}
               aria-label="Refresh past questions"
-              className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1.5 sm:px-3 text-xs font-bold disabled:opacity-50 ${ghost} ${focusRing}`}
+              className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[11px] font-bold disabled:opacity-50 ${ghost} ${focusRing}`}
             >
-              <RefreshCw size={14} className={loading ? "motion-safe:animate-spin" : ""} /> <span className="hidden sm:inline">Refresh</span>
+              <RefreshCw size={12} className={loading ? "motion-safe:animate-spin" : ""} /> <span className="hidden sm:inline">Refresh</span>
             </button>
           </div>
         </header>
 
         {/* ── TOOLBAR ── */}
-        <section aria-label="Search and filters" className={`rounded-3xl p-3 sm:p-4 ${card}`}>
-          <label className={`flex items-center gap-3 rounded-2xl border px-4 focus-within:border-indigo-500 focus-within:ring-2 focus-within:ring-indigo-500/20 ${field}`}>
-            <Search size={18} className="flex-none text-indigo-400" />
+        <section aria-label="Search and filters" className={`rounded-2xl p-2.5 sm:p-4 ${card}`}>
+          <label className={`flex items-center gap-2 rounded-xl border px-3 focus-within:border-indigo-500 focus-within:ring-2 focus-within:ring-indigo-500/20 ${field}`}>
+            <Search size={16} className="flex-none text-indigo-400" />
             <input
               type="search"
               placeholder="Search by title, course, school or year"
               aria-label="Search past questions"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="h-12 w-full bg-transparent text-sm font-medium outline-none placeholder:text-slate-400"
+              className="h-9 sm:h-10 w-full bg-transparent text-xs sm:text-sm font-medium outline-none placeholder:text-slate-400"
             />
             {search && (
               <button type="button" onClick={() => setSearch("")} aria-label="Clear search" className="rounded-full p-1 opacity-60 hover:opacity-100">
-                <X size={16} />
+                <X size={14} />
               </button>
             )}
           </label>
 
-          <div className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-[1fr_1fr_1fr_auto]">
+          <div className="mt-2 grid grid-cols-2 lg:grid-cols-[1fr_1fr_1fr_auto] gap-1.5 sm:gap-2">
             <select aria-label="Filter by course" value={courseFilter} onChange={(e) => setCourseFilter(e.target.value)} className={selectCls} style={colorScheme}>
               <option value="">All courses</option>
               {courses.map((c) => <option key={c} value={c}>{c}</option>)}
@@ -417,22 +416,22 @@ const Questions = ({ dark }) => {
               {schools.map((s) => <option key={s} value={s}>{s}</option>)}
             </select>
             <label className="relative block">
-              <ArrowDownWideNarrow size={15} className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 opacity-50" />
-              <select aria-label="Sort past questions" value={sort} onChange={(e) => setSort(e.target.value)} className={`${selectCls} appearance-none pr-9`} style={colorScheme}>
+              <ArrowDownWideNarrow size={13} className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 opacity-50" />
+              <select aria-label="Sort past questions" value={sort} onChange={(e) => setSort(e.target.value)} className={`${selectCls} appearance-none pr-7`} style={colorScheme}>
                 <option value="newest">Newest first</option>
-                <option value="title_asc">Title A to Z</option>
-                <option value="title_desc">Title Z to A</option>
+                <option value="title_asc">Title A-Z</option>
+                <option value="title_desc">Title Z-A</option>
               </select>
             </label>
             <button
               type="button"
               onClick={() => setSavedOnly((v) => !v)}
               aria-pressed={savedOnly}
-              className={`inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-bold transition-colors ${focusRing} ${
+              className={`inline-flex items-center justify-center gap-1.5 rounded-xl px-3 py-1.5 sm:py-2 text-xs sm:text-sm font-bold transition-colors ${focusRing} ${
                 savedOnly ? "bg-amber-500 text-black" : ghost
               }`}
             >
-              <Star size={15} className={savedOnly ? "fill-black" : ""} /> Saved
+              <Star size={13} className={savedOnly ? "fill-black" : ""} /> Saved
             </button>
           </div>
 

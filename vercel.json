@@ -5,6 +5,14 @@
       "destination": "https://unihelp-app.firebaseapp.com/__/auth/:path*"
     },
     {
+      "source": "/__/auth",
+      "destination": "https://unihelp-app.firebaseapp.com/__/auth"
+    },
+    {
+      "source": "/__/:path*",
+      "destination": "https://unihelp-app.firebaseapp.com/__/:path*"
+    },
+    {
       "source": "/feed",
       "has": [
         { "type": "query", "key": "post", "value": "(?<post>[^&]+)" },

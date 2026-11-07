@@ -153,15 +153,17 @@ const SignUp = ({ dark }) => {
       setIsLoading(true);
       const result = await signInWithPopup(auth, provider);
       const userSnap = await getDoc(doc(db, "users", result.user.uid));
+      const existingData = userSnap.exists() ? userSnap.data() : {};
+      const existingPhoto = existingData.photo || existingData.avatar || existingData.photoThumb || existingData.photoURL;
       await createUserDoc(result.user.uid, {
         firstName: result.user.displayName?.trim().split(/\s+/)[0] || "",
         lastName: result.user.displayName?.trim().split(/\s+/).slice(1).join(" ") || "",
         name: result.user.displayName || "",
         displayName: result.user.displayName || "",
         email: result.user.email || "",
-        photo: result.user.photoURL || "",
-        photoURL: result.user.photoURL || "",
-        photoThumb: result.user.photoURL || "",
+        photo: existingPhoto || result.user.photoURL || "",
+        photoURL: existingPhoto || result.user.photoURL || "",
+        photoThumb: existingData.photoThumb || existingPhoto || result.user.photoURL || "",
         provider: "google",
         premium: false,
       }, !userSnap.exists());

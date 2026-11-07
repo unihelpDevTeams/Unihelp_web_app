@@ -346,6 +346,7 @@ const App = () => {
             <Route path="/adminpanel" element={ <ProtectedRoute><AdminRoute dark={dark}><AdminPanel dark={dark} /></AdminRoute></ProtectedRoute> } />
           </Route>
 
+          <Route path="/__/*" element={<Navigate to="/" replace />} />
           <Route path="*" element={<NotFound dark={dark} />} />
         </Routes>
       </div>

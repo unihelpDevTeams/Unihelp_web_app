@@ -141,14 +141,15 @@ const Login = ({ dark }) => {
       const userRef = doc(db, "users", result.user.uid);
       const userSnap = await getDoc(userRef);
       const profile = userSnap.exists() ? userSnap.data() : {};
+      const existingPhoto = profile.photo || profile.avatar || profile.photoThumb || profile.photoURL;
       await setDoc(userRef, {
         uid: result.user.uid,
         name: profile.name || result.user.displayName || "",
         displayName: profile.displayName || result.user.displayName || "",
         email: result.user.email || profile.email || "",
-        photo: profile.photo || result.user.photoURL || "",
-        photoURL: profile.photoURL || result.user.photoURL || "",
-        photoThumb: profile.photoThumb || result.user.photoURL || "",
+        photo: existingPhoto || result.user.photoURL || "",
+        photoURL: existingPhoto || result.user.photoURL || "",
+        photoThumb: profile.photoThumb || existingPhoto || result.user.photoURL || "",
         provider: profile.provider || "google",
         ...(userSnap.exists() ? { updatedAt: serverTimestamp() } : { createdAt: serverTimestamp() }),
       }, { merge: true });

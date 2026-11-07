@@ -2,6 +2,7 @@ import {
   forwardRef,
   memo,
   useCallback,
+  useContext,
   useDeferredValue,
   useEffect,
   useImperativeHandle,
@@ -33,6 +34,7 @@ import {
   X,
 } from "lucide-react";
 import { auth } from "../../firebase/config";
+import { AuthContext } from "../context/AuthContext";
 import { deleteJson, getJson, postJson, uploadFeatureMedia } from "../../services/api";
 import { buildShareUrl, shareContent } from "../utils/share";
 import { updateShareMetadata } from "../utils/shareMetadata";
@@ -953,10 +955,36 @@ export default function NewsFeed({ dark = false }) {
   const location = useLocation();
   const t = useMemo(() => getTheme(dark), [dark]);
   const { toasts, notify, dismiss } = useToasts();
+  const { user: authContextUser, profile, userPhoto } = useContext(AuthContext) || {};
 
   const [currentUser, setCurrentUser] = useState(auth.currentUser);
   const [authReady, setAuthReady] = useState(Boolean(auth.currentUser));
-  const uid = currentUser?.uid;
+  const activeUser = authContextUser || currentUser;
+  const uid = activeUser?.uid;
+
+  const effectivePhoto =
+    userPhoto ||
+    profile?.photo ||
+    profile?.photoThumb ||
+    profile?.avatar ||
+    profile?.photoURL ||
+    activeUser?.photoURL ||
+    "";
+  const effectiveDisplayName =
+    profile?.username ||
+    profile?.displayName ||
+    profile?.name ||
+    activeUser?.displayName ||
+    "Student";
+
+  const effectiveUser = useMemo(() => {
+    if (!activeUser) return null;
+    return {
+      ...activeUser,
+      photoURL: effectivePhoto,
+      displayName: effectiveDisplayName,
+    };
+  }, [activeUser, effectivePhoto, effectiveDisplayName]);
 
   const [items, setItems] = useState(() =>
     feedCache && cacheOwner === (auth.currentUser?.uid || "anon") ? feedCache.items : []
@@ -1214,8 +1242,8 @@ export default function NewsFeed({ dark = false }) {
         backgroundPreset: draft.type === "colored" ? draft.preset : undefined,
         imageUrl: localUrl,
         authorId: uid,
-        authorName: currentUser?.displayName,
-        authorAvatar: currentUser?.photoURL,
+        authorName: effectiveDisplayName,
+        authorAvatar: effectivePhoto,
         likesCount: 0,
         commentsCount: 0,
         likedByMe: false,
@@ -1260,7 +1288,7 @@ export default function NewsFeed({ dark = false }) {
         if (localUrl) setTimeout(() => URL.revokeObjectURL(localUrl), 1500);
       }
     },
-    [clearFilters, currentUser, loadFeed, notify, uid, updateItems]
+    [clearFilters, effectiveDisplayName, effectivePhoto, loadFeed, notify, uid, updateItems]
   );
 
   const restorePost = useCallback(
@@ -1374,7 +1402,7 @@ export default function NewsFeed({ dark = false }) {
 
       <div className="grid items-start gap-4 sm:gap-6 lg:grid-cols-[minmax(0,1fr)_280px]">
         <section className="min-w-0">
-          <Composer ref={composerRef} user={currentUser} t={t} onSubmit={submitPost} />
+          <Composer ref={composerRef} user={effectiveUser} t={t} onSubmit={submitPost} />
 
           {/* ---------- search + filters ---------- */}
           <div className={`sticky top-2 z-20 mb-3 sm:mb-4 p-2 sm:p-2.5 shadow-sm ${t.card}`}>
@@ -1532,7 +1560,7 @@ export default function NewsFeed({ dark = false }) {
                 item={item}
                 own={Boolean(uid) && item.authorId === uid}
                 t={t}
-                user={currentUser}
+                user={effectiveUser}
                 highlighted={highlightId === item.id}
                 onLike={likePost}
                 onShare={sharePost}
@@ -1569,9 +1597,9 @@ export default function NewsFeed({ dark = false }) {
         <aside className="hidden space-y-4 lg:sticky lg:top-6 lg:block">
           <div className={`p-4 ${t.card}`}>
             <div className="flex items-center gap-3">
-              <Avatar src={currentUser?.photoURL} name={currentUser?.displayName} t={t} className="h-11 w-11 text-sm" />
+              <Avatar src={effectivePhoto} name={effectiveDisplayName} t={t} className="h-11 w-11 text-sm" />
               <div className="min-w-0">
-                <p className="truncate text-sm font-bold">{currentUser?.displayName || "Welcome"}</p>
+                <p className="truncate text-sm font-bold">{effectiveDisplayName || "Welcome"}</p>
                 <p className={`text-xs ${t.muted}`}>Share an update with campus</p>
               </div>
             </div>

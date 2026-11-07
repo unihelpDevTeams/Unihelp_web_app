@@ -65,7 +65,7 @@ import { isUserAdmin } from "../hooks/useAdmin";
 
 const SideBar = ({ dark, menuOpen, setMenuOpen }) => {
 
-  const { user } = useContext(AuthContext);
+  const { user, profile } = useContext(AuthContext);
   const isGuest = !user;
 
   const navigate = useNavigate();
@@ -628,7 +628,7 @@ const SideBar = ({ dark, menuOpen, setMenuOpen }) => {
                 <div onClick={() => navigate('/profile')} className="flex min-w-0 cursor-pointer flex-col gap-2">
                   <p className="font-medium">View Profile</p>
                   <div className="flex min-w-0 items-center gap-2 text-sm font-medium">
-                    <ProfilePhoto user={user} />
+                    <ProfilePhoto user={user} profile={profile} />
                     <div className="flex min-w-0 flex-col">
                       {user?.displayName ||
                       "Student"}

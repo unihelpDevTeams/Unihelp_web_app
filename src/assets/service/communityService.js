@@ -33,7 +33,7 @@ export const userSummary = (user, profile = {}) => ({
   uid: user.uid,
   name: profile.username || user.displayName || user.email || "Student",
   email: user.email || "",
-  avatar: profile.photo || user.photoURL || "",
+  avatar: profile?.photo || profile?.photoThumb || profile?.avatar || profile?.photoURL || user?.photoURL || "",
 });
 
 export const normalizeSearch = (value = "") => value.trim().toLowerCase();

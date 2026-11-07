@@ -40,8 +40,16 @@ const AuthProvider = ({ children }) => {
     };
   }, []);
 
+  const userPhoto =
+    profile?.photo ||
+    profile?.photoThumb ||
+    profile?.photoURL ||
+    profile?.avatar ||
+    user?.photoURL ||
+    "";
+
   return (
-    <AuthContext.Provider value={{ user, profile, loading }}>
+    <AuthContext.Provider value={{ user, profile, userPhoto, loading }}>
       {children}
     </AuthContext.Provider>
   );

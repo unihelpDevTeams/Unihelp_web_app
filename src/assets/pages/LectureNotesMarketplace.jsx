@@ -940,7 +940,6 @@ export default function LectureNotesMarketplace({ dark }) {
             </div>
           </div>
         )}
-      </div>
 
       {showUpload && (
         <div

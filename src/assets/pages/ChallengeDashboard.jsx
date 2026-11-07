@@ -163,7 +163,7 @@ const defaultStats = (profile = {}) => ({
   name: profile.username || auth.currentUser?.displayName || "Student",
   university: profile.school || "",
   department: profile.department || "",
-  avatar: profile.photo || auth.currentUser?.photoURL || "",
+  avatar: profile.photo || profile.photoThumb || profile.avatar || profile.photoURL || auth.currentUser?.photoURL || "",
   xp: 0,
   totalPoints: 0,
   rank: "Bronze",
@@ -314,7 +314,7 @@ function buildStatsFields(previous, payload, profile, user) {
     // Fall back to the profile so the university / department leaderboards actually work.
     university: previous.university || profile.school || "",
     department: previous.department || profile.department || "",
-    avatar: user?.photoURL || previous.avatar || profile.photo || "",
+    avatar: profile?.photo || profile?.photoThumb || profile?.avatar || profile?.photoURL || user?.photoURL || previous.avatar || "",
     xp: nextXp,
     totalPoints: (previous.totalPoints || 0) + score.pointsEarned,
     rank: getRankForXp(nextXp),

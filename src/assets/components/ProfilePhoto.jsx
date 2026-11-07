@@ -11,7 +11,13 @@ const ProfilePhoto = ({ profile, user }) => {
 
   const firstLetter = name.charAt(0).toUpperCase();
 
-  const photo = profile?.photo || user?.photoURL;
+  const photo =
+    profile?.photo ||
+    profile?.photoThumb ||
+    profile?.photoURL ||
+    profile?.avatar ||
+    user?.photoURL ||
+    "";
   const navigate = useNavigate();
   const handleClick = () => {
     navigate('/profile');

@@ -2439,7 +2439,7 @@ function GroupDetail({ groupId }) {
                 <Composer variant="post" placeholder="Share an update, question, or study resource…" onSend={sendPost} allowVideo={isPremium} sendLabel="Post" onDone={() => setComposeOpen(false)} autoFocus />
               ) : (
                 <button onClick={() => setComposeOpen(true)} className={`flex w-full items-center gap-3 p-3 text-left transition hover:[border-color:var(--brand)] ${cx.panel}`}>
-                  <UserAvatar src={profile.photo || user?.photoURL} name={profile.username || user?.displayName || "You"} size="md" />
+                  <UserAvatar src={profile?.photo || profile?.photoThumb || profile?.avatar || profile?.photoURL || user?.photoURL} name={profile?.username || user?.displayName || "You"} size="md" />
                   <span className={`flex-1 text-sm ${cx.faint}`}>Share an update, question, or resource…</span>
                   <span className="inline-flex h-9 items-center gap-1.5 rounded-xl px-3 text-xs font-semibold [background:var(--brand-soft)] [color:var(--brand-text)]"><Plus size={14} /> Post</span>
                 </button>

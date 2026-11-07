@@ -230,7 +230,8 @@ const NavDropdown = ({ item, dark }) => {
 /* ================================================= */
 
 const Navbar = ({ dark, setDark, setMenuOpen, menuOpen }) => {
-  const { user } = useContext(AuthContext);
+  const { user, profile, userPhoto } = useContext(AuthContext);
+  const avatarUrl = userPhoto || profile?.photo || profile?.photoThumb || profile?.photoURL || profile?.avatar || user?.photoURL;
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
@@ -445,6 +446,11 @@ const Navbar = ({ dark, setDark, setMenuOpen, menuOpen }) => {
             src={Images.logo}
             alt="UniHelp"
             className="h-9 w-auto sm:h-10 md:h-11"
+            onError={(e) => {
+              if (e.currentTarget.src !== window.location.origin + "/logo.png") {
+                e.currentTarget.src = "/logo.png";
+              }
+            }}
           />
         </Link>
 
@@ -606,15 +612,15 @@ const Navbar = ({ dark, setDark, setMenuOpen, menuOpen }) => {
                 className={`hidden sm:flex w-10 h-10 rounded-xl bg-indigo-500/10 text-indigo-500 items-center justify-center border border-indigo-500/20 overflow-hidden shrink-0 ${FOCUS_RING}`}
                 aria-label="Profile"
               >
-                {user?.photoURL ? (
+                {avatarUrl ? (
                   <img
-                    src={user.photoURL}
+                    src={avatarUrl}
                     alt=""
                     className="w-full h-full object-cover"
                   />
                 ) : (
                   <span className="text-sm font-bold uppercase">
-                    {user?.displayName ? user.displayName[0] : "U"}
+                    {profile?.name ? profile.name[0] : user?.displayName ? user.displayName[0] : "U"}
                   </span>
                 )}
               </Link>

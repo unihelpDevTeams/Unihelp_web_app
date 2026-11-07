@@ -294,7 +294,8 @@ const ToolRow = memo(function ToolRow({ item, theme, showCategory, onOpen }) {
    DASHBOARD
    ===================================================================== */
 const Dashboard = ({ dark }) => {
-  const { user, loading: authLoading } = useContext(AuthContext);
+  const { user, profile, userPhoto, loading: authLoading } = useContext(AuthContext);
+  const avatarUrl = userPhoto || profile?.photo || profile?.photoThumb || profile?.photoURL || profile?.avatar || user?.photoURL;
   const uid = user?.uid;
 
   const initialCache = uid ? readCgpaCache(uid) : null;
@@ -579,10 +580,10 @@ const Dashboard = ({ dark }) => {
             <div
               className={`flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-full text-lg font-black ${theme.iconTint}`}
             >
-              {user?.photoURL ? (
-                <img src={user.photoURL} alt="" referrerPolicy="no-referrer" className="h-full w-full object-cover" />
+              {avatarUrl ? (
+                <img src={avatarUrl} alt="" referrerPolicy="no-referrer" className="h-full w-full object-cover" />
               ) : (
-                initialsOf(user?.displayName)
+                initialsOf(profile?.name || user?.displayName)
               )}
             </div>
             <div className="min-w-0">

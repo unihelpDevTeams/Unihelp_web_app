@@ -409,8 +409,8 @@ const Profile = ({
               <div className="relative shrink-0">
                 <div className="w-20 h-20 md:w-24 md:h-24 rounded-full p-1 bg-gradient-to-br from-indigo-500 to-purple-500">
                   <div className="w-full h-full rounded-full overflow-hidden flex items-center justify-center text-3xl font-black text-white" style={{ backgroundColor: dark ? "#0f172a" : "#1e293b" }}>
-                    {(profile?.photo || auth.currentUser?.photoURL) ? (
-                      <img src={profile?.photo || auth.currentUser?.photoURL} alt="profile" className="w-full h-full object-cover" />
+                    {(profile?.photo || profile?.photoThumb || profile?.avatar || profile?.photoURL || auth.currentUser?.photoURL) ? (
+                      <img src={profile?.photo || profile?.photoThumb || profile?.avatar || profile?.photoURL || auth.currentUser?.photoURL} alt="profile" className="w-full h-full object-cover" />
                     ) : ((profile?.username || auth.currentUser?.displayName) ? (profile?.username || auth.currentUser?.displayName)[0].toUpperCase() : "U")}
                   </div>
                 </div>

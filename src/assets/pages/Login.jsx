@@ -519,24 +519,6 @@ const Login = ({ dark }) => {
                     ) : (
                       "Send Reset Link"
                     )}
-
-                    {passwordSetupUser ? (
-                      <GoogleMobilePasswordModal
-                        user={passwordSetupUser}
-                        dark={dark}
-                        onComplete={() => {
-                          const userId = passwordSetupUser.uid;
-                          setPasswordSetupUser(null);
-                          getUserRole(userId).then((role) => continueAfterLogin(Boolean(role)));
-                        }}
-                        onCancel={() => {
-                          const userId = passwordSetupUser.uid;
-                          setPasswordSetupUser(null);
-                          toast.info("You can set a password later by signing in with Google again.");
-                          getUserRole(userId).then((role) => continueAfterLogin(Boolean(role)));
-                        }}
-                      />
-                    ) : null}
                   </button>
                 </form>
               </div>
@@ -544,6 +526,24 @@ const Login = ({ dark }) => {
           </div>
         </div>
       )}
+
+      {passwordSetupUser ? (
+        <GoogleMobilePasswordModal
+          user={passwordSetupUser}
+          dark={dark}
+          onComplete={() => {
+            const userId = passwordSetupUser.uid;
+            setPasswordSetupUser(null);
+            getUserRole(userId).then((role) => continueAfterLogin(Boolean(role)));
+          }}
+          onCancel={() => {
+            const userId = passwordSetupUser.uid;
+            setPasswordSetupUser(null);
+            toast.info("You can set a password later by signing in with Google again.");
+            getUserRole(userId).then((role) => continueAfterLogin(Boolean(role)));
+          }}
+        />
+      ) : null}
 
       {showLinkModal && (
         <div

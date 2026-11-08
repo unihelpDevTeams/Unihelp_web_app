@@ -36,6 +36,7 @@ import NotificationsCenter from "./assets/pages/NotificationsCenter";
 import CommunitySettings from "./assets/pages/CommunitySettings";
 import ComingSoon from "./assets/pages/ComingSoon";
 import Contact from "./assets/pages/Contact";
+import DownloadPage from "./assets/pages/Download";
 import Report from "./assets/pages/Report";
 import StudentMarketplace from "./assets/pages/StudentMarketplace";
 import MarketplaceProductDetails from "./assets/pages/MarketplaceProductDetails";
@@ -302,7 +303,8 @@ const App = () => {
             <Route path="/help-center" element={<HelpCenter dark={dark} />} />
             <Route path="/privacy" element={<PrivacyPolicy dark={dark} />} />
             <Route path="/terms" element={<TermsOfService dark={dark} />} />
-            <Route path="/contact" element={<ProtectedRoute> <Contact dark={dark} /> </ProtectedRoute>}/>
+            <Route path="/contact" element={<Contact dark={dark} />} />
+            <Route path="/download" element={<DownloadPage dark={dark} />} />
             <Route  path="/report" element={ <ProtectedRoute> <Report dark={dark} /> </ProtectedRoute> } />
             <Route path="/formula-hub" element={<FormulaHome dark={dark} />} />
             <Route path="/formula-hub/subjects" element={<FormulaSubjectsPage dark={dark} />} />

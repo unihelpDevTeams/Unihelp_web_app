@@ -14,6 +14,7 @@ import {
   FileWarning,
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { brand, contactDetails, socialLinks } from "../data/socialLinks";
 
 export default function Footer({ dark = false }) {
   const year = new Date().getFullYear();
@@ -113,30 +114,39 @@ export default function Footer({ dark = false }) {
           <h3 className="mb-5 text-lg font-bold">Contact Us</h3>
 
           <div className="space-y-4">
-            <div className={`flex items-center gap-3 text-sm sm:text-base ${theme.muted}`}>
+            <a href={`mailto:${contactDetails.email}`} className={`flex items-center gap-3 text-sm sm:text-base ${theme.muted}`}>
               <Mail size={18} />
-              <span>support@unihelp.com</span>
-            </div>
+              <span>{contactDetails.email}</span>
+            </a>
 
-            <div className={`flex items-center gap-3 text-sm sm:text-base ${theme.muted}`}>
+            <a href={contactDetails.phoneHref} className={`flex items-center gap-3 text-sm sm:text-base ${theme.muted}`}>
               <Phone size={18} />
-              <span>+234 911 533 6339</span>
-            </div>
+              <span>{contactDetails.phone}</span>
+            </a>
 
-            <div className={`flex items-center gap-3 text-sm sm:text-base ${theme.muted}`}>
+            <a href={contactDetails.locationHref} target="_blank" rel="noreferrer" className={`flex items-center gap-3 text-sm sm:text-base ${theme.muted}`}>
               <MapPin size={18} />
-              <span>Nigeria</span>
-            </div>
+              <span>{contactDetails.location}</span>
+            </a>
           </div>
 
           <div className="mt-6 flex items-center gap-3">
-            {[Facebook, Instagram, Twitter, Youtube].map((Icon, i) => (
-              <button
-                key={i}
+            {[
+              { icon: Facebook, href: socialLinks.facebook, label: "Facebook" },
+              { icon: Instagram, href: socialLinks.instagram, label: "Instagram" },
+              { icon: Twitter, href: socialLinks.x, label: "X" },
+              { icon: Youtube, href: socialLinks.youtube, label: "YouTube" },
+            ].filter(({ href }) => Boolean(href)).map(({ icon: Icon, href, label }) => (
+              <a
+                key={label}
+                href={href}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={label}
                 className={`flex h-10 w-10 items-center justify-center rounded-xl transition ${theme.surface} ${theme.surfaceHover}`}
               >
                 <Icon size={18} />
-              </button>
+              </a>
             ))}
           </div>
         </div>
@@ -148,7 +158,7 @@ export default function Footer({ dark = false }) {
             <div>
               <h3 className="text-lg font-bold sm:text-xl">Stay Updated</h3>
               <p className={`mt-1 ${theme.muted}`}>
-                Get updates on new notes and student opportunities.
+                Get updates on student resources and new platform features.
               </p>
             </div>
 

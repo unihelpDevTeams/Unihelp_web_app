@@ -22,6 +22,7 @@ import {
   Sparkles
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { brand, contactDetails, socialLinks } from "../data/socialLinks";
 
 const subjectCategories = [
   "General Support",
@@ -47,6 +48,13 @@ export default function Contact({ dark = true }) {
 
   // Copy Feedback State
   const [copiedKey, setCopiedKey] = useState(null);
+
+  const supportChannels = [
+    { label: "Instagram", href: socialLinks.instagram },
+    { label: "LinkedIn", href: socialLinks.linkedin },
+    { label: "Facebook", href: socialLinks.facebook },
+    { label: "YouTube", href: socialLinks.youtube },
+  ].filter((channel) => Boolean(channel.href));
 
   const API_URL = (
     import.meta.env.VITE_API_URL || "http://localhost:5000"
@@ -123,54 +131,55 @@ export default function Contact({ dark = true }) {
   /* =========================================================
      CONTACT CHANNELS DATA
   ========================================================= */
-  const contactDetails = [
+  const contactDetailsList = [
     {
       key: "email",
       icon: Mail,
       label: "Official Email",
-      value: "support@unihelp.com",
+      value: contactDetails.email,
       actionType: "copy",
+      href: `mailto:${contactDetails.email}`,
     },
     {
       key: "phone",
       icon: Phone,
       label: "Direct Phone Line",
-      value: "+234 911 533 6339",
+      value: contactDetails.phone,
       actionType: "call",
-      href: "tel:+2349115336339",
+      href: contactDetails.phoneHref,
     },
     {
       key: "location",
       icon: MapPin,
       label: "Headquarters",
-      value: "Lagos, Nigeria",
+      value: contactDetails.location,
       actionType: "link",
-      href: "https://maps.google.com/?q=Lagos,+Nigeria",
+      href: contactDetails.locationHref,
     },
     {
       key: "website",
       icon: Globe,
       label: "Official Website",
-      value: "www.unihelp.com",
+      value: brand.siteUrl.replace("https://", ""),
       actionType: "link",
-      href: "https://www.unihelp.com",
+      href: brand.siteUrl,
     },
-    {
+    ...(socialLinks.linkedin ? [{
       key: "linkedin",
       icon: Linkedin,
       label: "LinkedIn Profile",
       value: "UniHelp Platform",
       actionType: "link",
-      href: "https://linkedin.com/company/unihelp",
-    },
-    {
+      href: socialLinks.linkedin,
+    }] : []),
+    ...(socialLinks.instagram ? [{
       key: "instagram",
       icon: Instagram,
       label: "Instagram Account",
       value: "@unihelp",
       actionType: "link",
-      href: "https://instagram.com/unihelp",
-    },
+      href: socialLinks.instagram,
+    }] : []),
   ];
 
   return (
